@@ -49,6 +49,7 @@ ggplot(data = mpg,
 6.  Using code chunk options, remove the messages about bandwidth `geom_density_ridges()` chose to use:
 
 ```{r}
+#| label: hide-messages
 #| message: false
 ggplot(data = mpg, 
        mapping = aes(y = manufacturer, x = hwy)) + 
@@ -62,6 +63,7 @@ ggplot(data = mpg,
 7.  Using code chunk options, make it so that these plots are printed side-by-side:
 
 ```{r}
+#| label: plot-layout-formatting
 #| layout-ncol: 2
 ggplot(data = mpg, 
        mapping = aes(y = manufacturer, x = hwy)) + 
@@ -84,6 +86,7 @@ ggplot(data = mpg,
 8.  Using code chunk options, make it so this chunk shows the code but not the output:
 
 ```{r}
+#| label: hide-output
 #| eval: false
 2 + 2
 ```
@@ -91,6 +94,7 @@ ggplot(data = mpg,
 9.  Using code chunk options, make it so the file can still knit even though this chunk has an error
 
 ```{r}
+#| label: doesnt-stop-knit
 #| eval: false
 2 + a
 ```
