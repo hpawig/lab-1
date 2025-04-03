@@ -145,7 +145,9 @@ mpg <- mpg |>
   rename(
     trans_style = trans
   )
-mpg
+
+# display both transmission variables
+data.frame(mpg$trans_type, mpg$trans_style)
 
 ```
 
@@ -153,7 +155,7 @@ mpg
 
 14. Find someone who took Stat 331 from a different professor than you. Compare your experiences. Tell me their name and professor. List one or two things that you think you learned more about, and one or two things that they learned more about.
 
-Alisa had Dr. Robinson and I had the Quarto Queen Dr. T! Alisa and I both learned a lot about tidyverse and pretty much did the same lab assignments. The course layouts were different; my STAT 331 was more focused on creating a final portfolio by the end of class and the weekly lab assignments that the portfolio was made out of. I think I learned more about how to reflect about my growth as a statistician from the beginning to the end of the quarter. I think Alisa learned more about how to use the tools learned throughout the course to do an analysis of a dataset, which is what they did for their final project.
+Alisa Krasilnikov had Dr. Robinson and I had the Quarto Queen Dr. T! Alisa and I both learned a lot about tidyverse and pretty much did the same lab assignments. The course layouts were different; my STAT 331 was more focused on creating a final portfolio by the end of class and the weekly lab assignments that the portfolio was made out of. I think I learned more about how to reflect about my growth as a statistician from the beginning to the end of the quarter. I think Alisa learned more about how to use the tools learned throughout the course to do an analysis of a dataset, which is what they did for their final project.
 
 
 15. Find someone in the class who **does not** share your birth month. Tell me their name and birthday, and use R to find out how many days apart your birthdays are.
