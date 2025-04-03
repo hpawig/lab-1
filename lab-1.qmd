@@ -147,7 +147,7 @@ mpg <- mpg |>
   )
 
 # display both transmission variables
-data.frame(mpg$trans_type, mpg$trans_style)
+head(data.frame(mpg$trans_type, mpg$trans_style))
 
 ```
 
@@ -159,6 +159,7 @@ Alisa Krasilnikov had Dr. Robinson and I had the Quarto Queen Dr. T! Alisa and I
 
 
 15. Find someone in the class who **does not** share your birth month. Tell me their name and birthday, and use R to find out how many days apart your birthdays are.
+
 Zachary Felix was born on August 30th, 2001. My birthday is on December 3rd, 2003. 
 
 ```{r}
