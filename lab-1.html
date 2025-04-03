@@ -2709,29 +2709,99 @@ vertical-align: -.125em;
 <p>Since you already seen some <code>ggplot</code>s, let’s do a bit of review on data handling. In this class, we will exclusively make use of tools from the <code>tidyverse</code> suite of packages to perform our data cleaning and wrangling operations. If you are less familiar with these packages or it’s been some time since you used them, I would strongly recommend referencing the function documentation!</p>
 <p>For these problems, we will continue to work with the <code>mpg</code> data frame, making various changes to the data to clean it up.</p>
 <ol start="11" type="1">
-<li>The <code>fl</code> variable describes the type of fuel for each car, with levels: <code>p</code>, <code>r</code>, <code>e</code>, <code>d</code>, and <code>c</code>. Do some research into what each of these labels mean! Then, use the <code>if_else()</code> function to create a new variable (<code>fuel_type</code>) with two levels: <code>petrol</code> (any car using petrolium-based gas) and <code>alternative energy</code> (any car not using petrolium-based gas).</li>
+<li>The <code>fl</code> variable describes the type of fuel for each car, with levels: <code>p</code>, <code>r</code>, <code>e</code>, <code>d</code>, and <code>c</code>. Do some research into what each of these labels mean! Then, use the <code>if_else()</code> function to create a new variable (<code>fuel_type</code>) with two levels: <code>petrol</code> (any car using petrolium-based gas) and <code>alternative energy</code> (any car not using petrolium-based gas). (p = premium, r = regular, e = ethanol, d = diesel, c = CNG)</li>
 </ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mpg<span class="sc">$</span>fuel_type <span class="ot">&lt;-</span> <span class="fu">if_else</span>(<span class="at">condition =</span> mpg<span class="sc">$</span>fl <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;p&quot;</span>, <span class="st">&quot;r&quot;</span>, <span class="st">&quot;d&quot;</span>),</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">true =</span> <span class="st">&quot;petrol&quot;</span>, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">false =</span> <span class="st">&quot;alternative energy&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="12" type="1">
-<li>The <code>drv</code> variable describes if the car has front drive (<code>f</code>), rear drive (<code>r</code>), or four wheel drive (<code>4</code>). Let’s make better labels for these values! Specifically, use the <code>case_when()</code> function to change the <code>drv</code> varible to have the following levels: <code>front</code>, <code>rear</code>, <code>four wheel</code>.</li>
+<li>The <code>drv</code> variable describes if the car has front drive (<code>f</code>), rear drive (<code>r</code>), or four wheel drive (<code>4</code>). Let’s make better labels for these values! Specifically, use the <code>case_when()</code> function to change the <code>drv</code> variable to have the following levels: <code>front</code>, <code>rear</code>, <code>four wheel</code>.</li>
 </ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">drv =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      drv <span class="sc">==</span> <span class="st">&quot;f&quot;</span> <span class="sc">~</span> <span class="st">&quot;front&quot;</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      drv <span class="sc">==</span> <span class="st">&quot;r&quot;</span> <span class="sc">~</span> <span class="st">&quot;rear&quot;</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;four wheel&quot;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>mpg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 234 × 12
+   manufacturer model      displ  year   cyl trans drv     cty   hwy fl    class
+   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt;
+ 1 audi         a4           1.8  1999     4 auto… front    18    29 p     comp…
+ 2 audi         a4           1.8  1999     4 manu… front    21    29 p     comp…
+ 3 audi         a4           2    2008     4 manu… front    20    31 p     comp…
+ 4 audi         a4           2    2008     4 auto… front    21    30 p     comp…
+ 5 audi         a4           2.8  1999     6 auto… front    16    26 p     comp…
+ 6 audi         a4           2.8  1999     6 manu… front    18    26 p     comp…
+ 7 audi         a4           3.1  2008     6 auto… front    18    27 p     comp…
+ 8 audi         a4 quattro   1.8  1999     4 manu… four…    18    26 p     comp…
+ 9 audi         a4 quattro   1.8  1999     4 auto… four…    16    25 p     comp…
+10 audi         a4 quattro   2    2008     4 manu… four…    20    28 p     comp…
+# ℹ 224 more rows
+# ℹ 1 more variable: fuel_type &lt;chr&gt;</code></pre>
 </div>
-<p>(string split + remove extra “)” ) 13. The <code>trans</code> variable contains two pieces of information, (1) the transmission style (<code>auto</code> or <code>manual</code>) and the specific type of transmission (e.g., <code>l5</code>, <code>m5</code>). Using the <code>str_split()</code> function, create a new variable (<code>trans_type</code>) containing the specific type of transmission of each car. Once you’ve made this new variable, use the <code>rename()</code> function to change the name of the <code>trans</code> column to <code>trans_style</code>.<br>
-<em>Hint: You will need to deal with the stray parenthesis!</em></p>
+</div>
+<p>(string split + remove extra “)” )</p>
+<ol start="13" type="1">
+<li>The <code>trans</code> variable contains two pieces of information, (1) the transmission style (<code>auto</code> or <code>manual</code>) and the specific type of transmission (e.g., <code>l5</code>, <code>m5</code>). Using the <code>str_split()</code> function, create a new variable (<code>trans_type</code>) containing the specific type of transmission of each car. Once you’ve made this new variable, use the <code>rename()</code> function to change the name of the <code>trans</code> column to <code>trans_style</code>.<br>
+<em>Hint: You will need to deal with the stray parenthesis!</em></li>
+</ol>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mpg <span class="ot">&lt;-</span> mpg <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">trans_type =</span> <span class="fu">str_split</span>(trans, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">simplify =</span> T)[,<span class="dv">1</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">trans =</span> <span class="fu">str_split</span>(trans, <span class="at">pattern =</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">simplify =</span> T)[,<span class="dv">2</span>],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">trans =</span> <span class="fu">str_remove</span>(trans, <span class="st">&quot;</span><span class="sc">\\</span><span class="st">)&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">trans_style =</span> trans</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>mpg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 234 × 13
+   manufacturer model      displ  year   cyl trans_style drv     cty   hwy fl   
+   &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;       &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;
+ 1 audi         a4           1.8  1999     4 l5          front    18    29 p    
+ 2 audi         a4           1.8  1999     4 m5          front    21    29 p    
+ 3 audi         a4           2    2008     4 m6          front    20    31 p    
+ 4 audi         a4           2    2008     4 av          front    21    30 p    
+ 5 audi         a4           2.8  1999     6 l5          front    16    26 p    
+ 6 audi         a4           2.8  1999     6 m5          front    18    26 p    
+ 7 audi         a4           3.1  2008     6 av          front    18    27 p    
+ 8 audi         a4 quattro   1.8  1999     4 m5          four…    18    26 p    
+ 9 audi         a4 quattro   1.8  1999     4 l5          four…    16    25 p    
+10 audi         a4 quattro   2    2008     4 m6          four…    20    28 p    
+# ℹ 224 more rows
+# ℹ 3 more variables: class &lt;chr&gt;, fuel_type &lt;chr&gt;, trans_type &lt;chr&gt;</code></pre>
+</div>
 </div>
 </section>
 <section id="getting-to-know-your-classmates" class="level2">
 <h2 class="anchored" data-anchor-id="getting-to-know-your-classmates">Getting to know your classmates</h2>
 <ol start="14" type="1">
-<li><p>Find someone who took Stat 331 from a different professor than you. Compare your experiences. Tell me their name and professor. List one or two things that you think you learned more about, and one or two things that they learned more about.</p></li>
-<li><p>Find someone in the class who <strong>does not</strong> share your birth month. Tell me their name and birthday, and use R to find out how many days apart your birthdays are.</p></li>
+<li>Find someone who took Stat 331 from a different professor than you. Compare your experiences. Tell me their name and professor. List one or two things that you think you learned more about, and one or two things that they learned more about.</li>
 </ol>
+<p>Alisa had Dr. Robinson and I had the Quarto Queen Dr. T! Alisa and I both learned a lot about tidyverse and pretty much did the same lab assignments. The course layouts were different; my STAT 331 was more focused on creating a final portfolio by the end of class and the weekly lab assignments that the portfolio was made out of. I think I learned more about how to reflect about my growth as a statistician from the beginning to the end of the quarter. I think Alisa learned more about how to use the tools learned throughout the course to do an analysis of a dataset, which is what they did for their final project.</p>
+<ol start="15" type="1">
+<li>Find someone in the class who <strong>does not</strong> share your birth month. Tell me their name and birthday, and use R to find out how many days apart your birthdays are. Zachary Felix was born on August 30th, 2001. My birthday is on December 3rd, 2003.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>d1 <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&#39;2001-08-30&#39;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>d2 <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(<span class="st">&#39;2003-12-03&#39;</span>) </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>d2<span class="sc">-</span>d1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time difference of 825 days</code></pre>
+</div>
+</div>
 </section>
 
 </main>

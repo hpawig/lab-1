@@ -110,7 +110,7 @@ For these problems, we will continue to work with the `mpg` data frame, making v
 11. The `fl` variable describes the type of fuel for each car, with levels: `p`, `r`, `e`, `d`, and `c`. Do some research into what each of these labels mean! Then, use the `if_else()` function to create a new variable (`fuel_type`) with two levels: `petrol` (any car using petrolium-based gas) and `alternative energy` (any car not using petrolium-based gas).
 (p = premium, r = regular, e = ethanol, d = diesel, c = CNG)
 ```{r}
-mpg <- mpg$fuel_type <- if_else(condition = mpg$fl %in% c("p", "r", "d"),
+mpg$fuel_type <- if_else(condition = mpg$fl %in% c("p", "r", "d"),
                          true = "petrol", 
                          false = "alternative energy")
 ```
@@ -118,11 +118,16 @@ mpg <- mpg$fuel_type <- if_else(condition = mpg$fl %in% c("p", "r", "d"),
 12. The `drv` variable describes if the car has front drive (`f`), rear drive (`r`), or four wheel drive (`4`). Let's make better labels for these values! Specifically, use the `case_when()` function to change the `drv` variable to have the following levels: `front`, `rear`, `four wheel`.
 
 ```{r}
-mpg <= mpg$drv <- case_when(
-  mpg$drv == "f" ~ "front",
-  mpg$drv == "r" ~ "rear",
-  TRUE ~ "four wheel"
-)
+mpg <- mpg |> 
+  mutate(
+    drv = case_when(
+      drv == "f" ~ "front",
+      drv == "r" ~ "rear",
+      TRUE ~ "four wheel"
+    )
+  )
+
+mpg
 ```
 
 (string split + remove extra ")" ) 
@@ -135,12 +140,12 @@ mpg <- mpg |>
   mutate(
     trans_type = str_split(trans, pattern = "\\(", simplify = T)[,1],
     trans = str_split(trans, pattern = "\\(", simplify = T)[,2],
-    trans = str_remove(trans_type, "\\)")
+    trans = str_remove(trans, "\\)")
   ) |> 
   rename(
     trans_style = trans
   )
-
+mpg
 
 ```
 
@@ -148,17 +153,17 @@ mpg <- mpg |>
 
 14. Find someone who took Stat 331 from a different professor than you. Compare your experiences. Tell me their name and professor. List one or two things that you think you learned more about, and one or two things that they learned more about.
 
-Lily had Professor Frame. She had a different experience than me in the sense that she learned R coding differently, and their class had fill in the blank questions. She also learned about tidyverse and 
+Alisa had Dr. Robinson and I had the Quarto Queen Dr. T! Alisa and I both learned a lot about tidyverse and pretty much did the same lab assignments. The course layouts were different; my STAT 331 was more focused on creating a final portfolio by the end of class and the weekly lab assignments that the portfolio was made out of. I think I learned more about how to reflect about my growth as a statistician from the beginning to the end of the quarter. I think Alisa learned more about how to use the tools learned throughout the course to do an analysis of a dataset, which is what they did for their final project.
 
 
 15. Find someone in the class who **does not** share your birth month. Tell me their name and birthday, and use R to find out how many days apart your birthdays are.
-Zachary Felix was born on August 30th, 2001. 
+Zachary Felix was born on August 30th, 2001. My birthday is on December 3rd, 2003. 
 
 ```{r}
 #| label: birthday-difference
 library(lubridate)
 d1 <- as.Date('2001-08-30')
-d2 <- as.Date('2003-12-03')
+d2 <- as.Date('2003-12-03') 
 
 d2-d1
 ```
